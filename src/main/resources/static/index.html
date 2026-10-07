@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Insurance Claim System — Customer Portal</title>
+    <meta name="description" content="Submit and track your travel insurance claim online.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <span class="icon">✈️</span>
+    <div>
+        <h1>Travel Insurance Claim System</h1>
+        <div class="subtitle">Customer Portal — Submit &amp; Track Claims</div>
+    </div>
+</header>
+
+<nav>
+    <button class="active" onclick="showTab('submitTab', this)" id="navSubmit">Submit Claim</button>
+    <button onclick="showTab('trackTab', this)" id="navTrack">Track Claim</button>
+    <a href="reviewer.html" style="margin-left:auto;text-decoration:none;">
+        <button style="color:#2d6a9f;">Reviewer Portal →</button>
+    </a>
+</nav>
+
+<main>
+
+    <!-- ===== TAB: SUBMIT CLAIM ===== -->
+    <section id="submitTab" class="tab-section active">
+        <div class="card">
+            <h2>📋 Submit a New Claim</h2>
+
+            <form id="claimForm" novalidate>
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label for="policyNumber">Policy Number *</label>
+                        <input type="text" id="policyNumber" name="policyNumber"
+                               placeholder="e.g. POL-2024-001" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customerName">Full Name *</label>
+                        <input type="text" id="customerName" name="customerName"
+                               placeholder="e.g. Hasnain Ahmed" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="destination">Travel Destination *</label>
+                        <input type="text" id="destination" name="destination"
+                               placeholder="e.g. Dubai, UAE" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="travelDate">Travel Date *</label>
+                        <input type="date" id="travelDate" name="travelDate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="claimType">Claim Type *</label>
+                        <select id="claimType" name="claimType" required>
+                            <option value="">-- Select Type --</option>
+                            <option value="Flight Cancellation">Flight Cancellation</option>
+                            <option value="Baggage Loss">Baggage Loss</option>
+                            <option value="Medical Emergency">Medical Emergency</option>
+                            <option value="Trip Delay">Trip Delay</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="claimAmount">Claim Amount (₹) *</label>
+                        <input type="number" id="claimAmount" name="claimAmount"
+                               placeholder="e.g. 15000" min="1" step="0.01" required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="description">Incident Description *</label>
+                        <textarea id="description" name="description" rows="3"
+                                  placeholder="Briefly describe what happened during your trip..." required></textarea>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="documentReference">Document Reference *</label>
+                        <input type="text" id="documentReference" name="documentReference"
+                               placeholder="e.g. Boarding pass BP-20241001, Doctor receipt DR-001"
+                               required>
+                        <small style="color:#6c757d;font-size:0.78rem;">
+                            Enter a reference to your supporting documents (e.g. receipt numbers, ticket IDs). Physical upload is not required for this MVP.
+                        </small>
+                    </div>
+
+                </div><!-- /form-grid -->
+
+                <div class="action-row" style="margin-top:20px;">
+                    <button type="submit" class="btn btn-primary" id="submitBtn">
+                        🚀 Submit Claim
+                    </button>
+                    <button type="reset" class="btn btn-secondary" onclick="clearSubmitResult()">
+                        🔄 Clear
+                    </button>
+                </div>
+            </form>
+
+            <!-- Result after submission -->
+            <div id="submitResult" class="msg" role="alert"></div>
+
+            <!-- Success claim ID box -->
+            <div id="claimIdBox" style="display:none;margin-top:16px;" class="card" style="background:#f0fff4;border-color:#c3e6cb;">
+                <h2 style="color:#155724;">✅ Claim Submitted Successfully</h2>
+                <p style="font-size:0.95rem;margin-bottom:12px;color:#333;">
+                    Your claim has been registered. Please save your Claim ID to track its status.
+                </p>
+                <div class="claim-detail-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Claim ID</span>
+                        <span class="detail-value" id="generatedClaimId" style="font-size:1.1rem;font-weight:700;color:#1a3a5c;"></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Status</span>
+                        <span class="detail-value"><span class="badge badge-pending">PENDING</span></span>
+                    </div>
+                </div>
+                <p style="margin-top:12px;font-size:0.85rem;color:#555;">
+                    Use the <strong>Track Claim</strong> tab to check the current status of your claim.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ===== TAB: TRACK CLAIM ===== -->
+    <section id="trackTab" class="tab-section">
+        <div class="card">
+            <h2>🔍 Track Your Claim</h2>
+            <p style="font-size:0.9rem;color:#555;margin-bottom:16px;">
+                Enter your Claim ID to view the current status and full details of your submitted claim.
+            </p>
+            <div class="search-row">
+                <input type="number" id="trackClaimId" placeholder="Enter your Claim ID (e.g. 1)" min="1">
+                <button class="btn btn-primary" onclick="trackClaim()" id="trackBtn">
+                    🔍 Search
+                </button>
+            </div>
+            <div id="trackResult" class="msg" role="alert"></div>
+        </div>
+
+        <!-- Claim Details Display -->
+        <div id="claimDetailsCard" class="card" style="display:none;">
+            <h2>📄 Claim Details</h2>
+            <div class="claim-detail-grid">
+                <div class="detail-item">
+                    <span class="detail-label">Claim ID</span>
+                    <span class="detail-value" id="d-claimId"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Status</span>
+                    <span class="detail-value" id="d-status"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Policy Number</span>
+                    <span class="detail-value" id="d-policyNumber"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Customer Name</span>
+                    <span class="detail-value" id="d-customerName"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Destination</span>
+                    <span class="detail-value" id="d-destination"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Travel Date</span>
+                    <span class="detail-value" id="d-travelDate"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Claim Type</span>
+                    <span class="detail-value" id="d-claimType"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Claim Amount</span>
+                    <span class="detail-value" id="d-claimAmount"></span>
+                </div>
+                <div class="detail-item full-width">
+                    <span class="detail-label">Description</span>
+                    <span class="detail-value" id="d-description"></span>
+                </div>
+                <div class="detail-item full-width">
+                    <span class="detail-label">Document Reference</span>
+                    <span class="detail-value" id="d-documentReference"></span>
+                </div>
+                <div class="detail-item full-width" id="d-rejectionBox" style="display:none;">
+                    <span class="detail-label">Rejection Reason</span>
+                    <span class="detail-value" id="d-rejectionReason" style="color:#721c24;"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Submitted On</span>
+                    <span class="detail-value" id="d-createdAt"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Last Updated</span>
+                    <span class="detail-value" id="d-updatedAt"></span>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+</main>
+
+<script src="customer.js"></script>
+</body>
+</html>

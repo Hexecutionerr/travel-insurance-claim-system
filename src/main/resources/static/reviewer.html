@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Insurance Claim System — Reviewer Portal</title>
+    <meta name="description" content="Reviewer portal for approving and rejecting travel insurance claims.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <span class="icon">🔎</span>
+    <div>
+        <h1>Travel Insurance Claim System</h1>
+        <div class="subtitle">Reviewer Portal — Review &amp; Decide Claims</div>
+    </div>
+</header>
+
+<nav>
+    <button class="active" id="navPending" onclick="showReviewerTab('pendingTab', this)">Pending Claims</button>
+    <button id="navDetail" onclick="showReviewerTab('detailTab', this)">Claim Detail</button>
+    <button id="navHistory" onclick="showHistoryTab(this)">📜 Claim History</button>
+    <a href="index.html" style="margin-left:auto;text-decoration:none;">
+        <button style="color:#2d6a9f;">← Customer Portal</button>
+    </a>
+</nav>
+
+<main>
+
+    <!-- ===== TAB: PENDING CLAIMS ===== -->
+    <section id="pendingTab" class="tab-section active">
+        <div class="card">
+            <h2>⏳ Pending Claims Queue</h2>
+            <p style="font-size:0.9rem;color:#555;margin-bottom:16px;">
+                Click any claim in the list below to open it and take action.
+            </p>
+            <div class="action-row" style="margin-bottom:16px;">
+                <button class="btn btn-primary" onclick="loadPendingClaims()" id="refreshBtn">
+                    🔄 Refresh List
+                </button>
+            </div>
+
+            <div id="pendingMsg" class="msg" role="alert"></div>
+            <div id="claimsList" class="claims-list">
+                <div class="empty-state">Click "Refresh List" to load pending claims.</div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ===== TAB: CLAIM DETAIL & ACTION ===== -->
+    <section id="detailTab" class="tab-section">
+        <div class="card">
+            <h2>📄 Claim Review</h2>
+
+            <div id="detailMsg" class="msg" role="alert"></div>
+
+            <!-- Claim details grid -->
+            <div id="reviewDetailsCard" style="display:none;">
+                <div class="claim-detail-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Claim ID</span>
+                        <span class="detail-value" id="r-claimId"></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Status</span>
+                        <span class="detail-value" id="r-status"></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Policy Number</span>
+                        <span class="detail-value" id="r-policyNumber"></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Customer Name</span>
+                        <span class="detail-value" id="r-customerName"></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Destination</span>
+                        <span class="detail-value" id="r-destination"></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Travel Date</span>
+                        <span class="detail-value" id="r-travelDate"></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Claim Type</span>
+                        <span class="detail-value" id="r-claimType"></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Claim Amount</span>
+                        <span class="detail-value" id="r-claimAmount"></span>
+                    </div>
+                    <div class="detail-item full-width">
+                        <span class="detail-label">Incident Description</span>
+                        <span class="detail-value" id="r-description"></span>
+                    </div>
+                    <div class="detail-item full-width">
+                        <span class="detail-label">Document Reference</span>
+                        <span class="detail-value" id="r-documentReference"></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Submitted On</span>
+                        <span class="detail-value" id="r-createdAt"></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Last Updated</span>
+                        <span class="detail-value" id="r-updatedAt"></span>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- ---- ACTION SECTION ---- -->
+                <div id="actionSection">
+                    <h2 style="font-size:1rem;color:#1a3a5c;margin-bottom:14px;">⚖️ Take Action</h2>
+
+                    <!-- Reject reason box (hidden until reject is clicked) -->
+                    <div id="rejectReasonBox">
+                        <div class="form-group" style="margin-bottom:10px;">
+                            <label for="rejectionReason">Rejection Reason *</label>
+                            <textarea id="rejectionReason" rows="2"
+                                      placeholder="Provide a clear reason for rejecting this claim..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="action-row">
+                        <button class="btn btn-success" id="approveBtn" onclick="approveClaim()">
+                            ✅ Approve
+                        </button>
+                        <button class="btn btn-danger" id="rejectToggleBtn" onclick="toggleRejectBox()">
+                            ❌ Reject
+                        </button>
+                        <button class="btn btn-danger" id="confirmRejectBtn" onclick="rejectClaim()"
+                                style="display:none;">
+                            ❌ Confirm Rejection
+                        </button>
+                        <button class="btn btn-secondary" onclick="cancelReject()"
+                                id="cancelRejectBtn" style="display:none;">
+                            Cancel
+                        </button>
+                        <button class="btn btn-secondary"
+                                onclick="showReviewerTab('pendingTab', document.getElementById('navPending'))">
+                            ← Back to List
+                        </button>
+                    </div>
+                </div><!-- /actionSection -->
+
+            </div><!-- /reviewDetailsCard -->
+
+        </div>
+    </section>
+
+    <!-- ===== TAB: CLAIM HISTORY ===== -->
+    <section id="historyTab" class="tab-section">
+        <div class="card">
+            <h2>📜 Claim History</h2>
+            <p style="font-size:0.9rem;color:#555;margin-bottom:16px;">
+                All submitted claims — click any row to view full details.
+            </p>
+
+            <!-- Filter row -->
+            <div class="action-row" style="margin-bottom:16px;flex-wrap:wrap;gap:10px;">
+                <button class="btn btn-primary" onclick="loadClaimHistory()" id="historyRefreshBtn">
+                    🔄 Refresh
+                </button>
+                <select id="historyStatusFilter" onchange="filterHistoryTable()"
+                        style="padding:8px 12px;border:1px solid #ccd9e8;border-radius:8px;font-size:0.9rem;color:#1a3a5c;background:#f0f4f8;">
+                    <option value="ALL">All Statuses</option>
+                    <option value="PENDING">Pending</option>
+                    <option value="APPROVED">Approved</option>
+                    <option value="REJECTED">Rejected</option>
+                </select>
+                <span id="historyCount" style="font-size:0.85rem;color:#666;align-self:center;"></span>
+            </div>
+
+            <div id="historyMsg" class="msg" role="alert"></div>
+
+            <!-- History Table -->
+            <div style="overflow-x:auto;">
+                <table id="historyTable" style="width:100%;border-collapse:collapse;display:none;">
+                    <thead>
+                        <tr style="background:#1a3a5c;color:#fff;text-align:left;">
+                            <th style="padding:10px 14px;border-radius:6px 0 0 0;">ID</th>
+                            <th style="padding:10px 14px;">Customer</th>
+                            <th style="padding:10px 14px;">Policy No.</th>
+                            <th style="padding:10px 14px;">Type</th>
+                            <th style="padding:10px 14px;">Amount</th>
+                            <th style="padding:10px 14px;">Destination</th>
+                            <th style="padding:10px 14px;">Status</th>
+                            <th style="padding:10px 14px;border-radius:0 6px 0 0;">Submitted</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyTableBody"></tbody>
+                </table>
+            </div>
+            <div id="historyEmpty" class="empty-state">Click "Refresh" to load claim history.</div>
+        </div>
+    </section>
+
+</main>
+
+<script src="reviewer.js"></script>
+</body>
+</html>

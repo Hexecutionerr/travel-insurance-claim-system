@@ -1,0 +1,381 @@
+/* =========================================================
+   Travel Insurance Claim System — Global Stylesheet
+   Academic MVP Project
+   ========================================================= */
+
+/* ---------- Reset & Base ---------- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f4f8;
+    color: #333;
+    min-height: 100vh;
+}
+
+/* ---------- Header ---------- */
+header {
+    background: linear-gradient(135deg, #1a3a5c 0%, #2d6a9f 100%);
+    color: white;
+    padding: 18px 30px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+}
+
+header h1 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+header .subtitle {
+    font-size: 0.82rem;
+    opacity: 0.82;
+    margin-top: 2px;
+}
+
+header .icon {
+    font-size: 2rem;
+}
+
+/* ---------- Navigation Tabs ---------- */
+nav {
+    background: #fff;
+    border-bottom: 2px solid #dce3ec;
+    display: flex;
+    padding: 0 30px;
+    gap: 4px;
+}
+
+nav button {
+    padding: 13px 22px;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: -2px;
+}
+
+nav button:hover {
+    color: #2d6a9f;
+}
+
+nav button.active {
+    color: #1a3a5c;
+    border-bottom-color: #2d6a9f;
+    background: #f5f9ff;
+}
+
+/* ---------- Main Layout ---------- */
+main {
+    max-width: 820px;
+    margin: 32px auto;
+    padding: 0 20px;
+}
+
+/* ---------- Card ---------- */
+.card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    border: 1px solid #e4eaf2;
+}
+
+.card h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1a3a5c;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e9eef5;
+}
+
+/* ---------- Form ---------- */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #4a5568;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+input, select, textarea {
+    padding: 10px 13px;
+    border: 1.5px solid #d1dae8;
+    border-radius: 6px;
+    font-size: 0.93rem;
+    color: #333;
+    background: #fafbfd;
+    transition: border-color 0.2s;
+    font-family: inherit;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #2d6a9f;
+    background: #fff;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 22px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.btn-primary {
+    background: #2d6a9f;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: #1a3a5c;
+    transform: translateY(-1px);
+}
+
+.btn-success {
+    background: #28a745;
+    color: #fff;
+}
+
+.btn-success:hover {
+    background: #1e7e34;
+}
+
+.btn-danger {
+    background: #dc3545;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background: #b02131;
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background: #545b62;
+}
+
+.btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ---------- Messages ---------- */
+.msg {
+    padding: 13px 16px;
+    border-radius: 7px;
+    font-size: 0.93rem;
+    margin-top: 14px;
+    display: none;
+}
+
+.msg.show { display: block; }
+
+.msg-success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.msg-error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.msg-info {
+    background: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+/* ---------- Status Badges ---------- */
+.badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.badge-pending  { background: #fff3cd; color: #856404; border: 1px solid #ffc107; }
+.badge-approved { background: #d4edda; color: #155724; border: 1px solid #28a745; }
+.badge-rejected { background: #f8d7da; color: #721c24; border: 1px solid #dc3545; }
+
+/* ---------- Claim Detail Display ---------- */
+.claim-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.detail-item.full-width {
+    grid-column: 1 / -1;
+}
+
+.detail-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.detail-value {
+    font-size: 0.95rem;
+    color: #222;
+    padding: 8px 12px;
+    background: #f5f8fc;
+    border-radius: 5px;
+    border: 1px solid #e4eaf2;
+    word-break: break-word;
+}
+
+/* ---------- Pending Claims List ---------- */
+.claims-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.claim-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    border: 1.5px solid #e4eaf2;
+    border-radius: 8px;
+    background: #fafbfd;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.claim-list-item:hover {
+    border-color: #2d6a9f;
+    background: #f0f6ff;
+    transform: translateX(3px);
+}
+
+.claim-list-item .claim-id {
+    font-weight: 700;
+    color: #1a3a5c;
+    font-size: 0.9rem;
+}
+
+.claim-list-item .claim-info {
+    font-size: 0.87rem;
+    color: #555;
+}
+
+.claim-list-item .claim-meta {
+    font-size: 0.82rem;
+    color: #888;
+}
+
+/* ---------- Action Row ---------- */
+.action-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+}
+
+/* ---------- Search Row ---------- */
+.search-row {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+}
+
+.search-row input {
+    flex: 1;
+}
+
+/* ---------- Divider ---------- */
+.divider {
+    height: 1px;
+    background: #e4eaf2;
+    margin: 20px 0;
+}
+
+/* ---------- Tab Sections ---------- */
+.tab-section { display: none; }
+.tab-section.active { display: block; }
+
+/* ---------- Rejection Reason Box ---------- */
+#rejectReasonBox {
+    display: none;
+    margin-top: 10px;
+}
+
+/* ---------- Empty State ---------- */
+.empty-state {
+    text-align: center;
+    padding: 30px;
+    color: #888;
+    font-size: 0.95rem;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 600px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .claim-detail-grid { grid-template-columns: 1fr; }
+    .search-row { flex-direction: column; }
+    main { margin: 16px auto; }
+    .card { padding: 20px 16px; }
+}
