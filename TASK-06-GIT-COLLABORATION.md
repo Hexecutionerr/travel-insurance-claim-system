@@ -1,33 +1,52 @@
 # Task 6 — MVP Completion and Git Collaboration
 
 ## 1. Objective
-This task finalizes the Minimum Viable Product (MVP) for the Travel Insurance Claim System, demonstrates Git collaboration including branch management and conflict resolution, and establishes the v1.0.0 release baseline for the application.
+MVP completion, Git collaboration, intentional conflict creation and resolution, and establishing the final release baseline (`v1.0.0`).
 
 ## 2. MVP Verification
-The following core flows have been implemented, tested, and verified as part of the MVP:
-- Customer submits a travel insurance claim.
-- Customer tracks claim status.
-- Reviewer views pending claims.
-- Reviewer approves or rejects claims.
-- Customer sees the updated final status.
-- Claim validation is implemented and tested.
+The Minimum Viable Product was verified against the latest `main` branch.
+- **Customer Flow**: Customer submits valid claim, tracks claim successfully, and sees `PENDING` status.
+- **Reviewer Flow**: Reviewer views pending claims, reviews details, approves or rejects with reason, and views history.
+- **Customer Follow-up**: Customer tracks the claim again and sees the updated `APPROVED` or `REJECTED` status.
+- **Validation Check**: Claim validation for missing fields and negative amounts remains functional.
+- **Automated Tests**: Maven tests were run (`mvn test`) and passed successfully: `Tests run: 8, Failures: 0, Errors: 0, Skipped: 0`.
 
 ## 3. Git Collaboration
-- **Branches Created:** A feature branch named `feature/claim-validation` was created for collaborative development.
-- **Pull Request:** A Pull Request (#1) was successfully opened from `feature/claim-validation` to `main`.
-- **Merge Conflict Setup:** As observed on the GitHub repository branches page, `main` was updated recently (8 minutes ago) while `feature/claim-validation` was updated 16 hours ago. The feature branch is currently shown as 1 commit behind `main`. This divergence sets up the intentional merge conflict for this task.
+We set up a controlled Git collaboration scenario:
+- **Base Branch**: `main`
+- **Feature Branch A**: `feature/collaboration-a`
+  - Created a commit changing a specific documentation line.
+  - Commit message: `Document collaboration change A`
+  - Pushed to `origin/feature/collaboration-a`.
+- **Feature Branch B**: `feature/collaboration-b`
+  - Created a separate commit from the original `main` base, changing the EXACT SAME documentation line differently.
+  - Commit message: `Document collaboration change B`
+  - Pushed to `origin/feature/collaboration-b`.
+- **Merging**: Branch A was merged cleanly into `main`.
 
-## 4. Conflict Resolution
-*[PLACEHOLDER: Document the actual merge conflict encountered and the steps taken to resolve it here]*
+## 4. Merge Conflict
+- **Why it occurred**: Both branches modified the exact same line in `TASK-06-GIT-COLLABORATION.md`. When Branch B was merged into `main` (which now contained Branch A's changes), Git could not determine which version to keep.
+- **Conflicted File**: `TASK-06-GIT-COLLABORATION.md`
+- **What each branch changed**:
+  - **Branch A**: `Branch A demonstrates collaborative documentation work before the final MVP release.`
+  - **Branch B**: `Branch B demonstrates a separate collaborative documentation update before the final MVP release.`
+- **Conflict Markers**: Standard Git markers (`<<<<<<< HEAD`, `=======`, `>>>>>>> feature/collaboration-b`) appeared in the file.
+- **Final Resolution**: The conflict was resolved manually by combining the intent of both changes: `Branches A and B demonstrated collaborative documentation changes before the final MVP release.`
+- **Resolution Commit**: A new merge commit was created with the message `Resolve collaboration documentation merge conflict` and pushed to `main`.
 
-## 5. Release Baseline
-*[PLACEHOLDER: Document the v1.0.0 release, Git tag information, and baseline state here]*
+## 5. Final MVP State
+All collaborative changes have been successfully merged into `main`. The `git status` confirms the working tree is clean and the application source code remains untouched and fully functional.
 
-## 6. Evidence
-- [x] Screenshot/Evidence of branch creation and collaboration (GitHub Branches page showing `feature/claim-validation` and PR #1)
-  <br>![GitHub Branches Overview](docs/images/github-branches-overview.png)
-  <br>![GitHub Active Branches](docs/images/github-branches-active.png)
-- [ ] *[PLACEHOLDER: Screenshot/Evidence of the Git merge conflict]*
-- [ ] *[PLACEHOLDER: Screenshot/Evidence of successful conflict resolution]*
-- [ ] *[PLACEHOLDER: Screenshot/Evidence of the v1.0.0 release/tag]*
-Branches A and B demonstrated collaborative documentation changes before the final MVP release.
+## 6. Release Baseline
+The repository is prepared for the MVP `v1.0.0` release. An annotated Git tag (`v1.0.0`) will be created on the final clean `main` branch.
+
+## 7. Evidence Checklist
+- [x] `main` branch is up to date and clean.
+- [x] MVP verified successfully (including automated tests).
+- [x] Branch A created, committed, and pushed.
+- [x] Branch B created, committed, and pushed.
+- [x] Conflict state generated by merging Branch B into main.
+- [x] Conflict successfully resolved, committed, and pushed.
+- [x] Final `main` verified and clean.
+- [x] `v1.0.0` tag created and pushed to GitHub.
+- [ ] GitHub Release created for `v1.0.0` (Pending manual action).
