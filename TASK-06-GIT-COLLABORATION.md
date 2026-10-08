@@ -29,4 +29,4 @@ The following core flows have been implemented, tested, and verified as part of 
   <br>![GitHub Active Branches](docs/images/github-branches-active.png)
 - [ ] *[PLACEHOLDER: Screenshot/Evidence of the Git merge conflict]*
 - [ ] *[PLACEHOLDER: Screenshot/Evidence of successful conflict resolution]*
-- [ ] *[PLACEHOLDER: Screenshot/Evidence of the v1.0.0 release/tag]*
+- [ ] *[PLACEHOLDER: Screenshot/Evidence of the v1.0.0 release/tag]**[PLACEHOLDER: Collaboration demo here]*
